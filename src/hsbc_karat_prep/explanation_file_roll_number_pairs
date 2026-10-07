@@ -1,0 +1,74 @@
+Problem Statement1
+------------------
+-> There is an array that have roll no and assign course to that roll number.
+-> The roll number will repeat again in the array with different course name.
+-> Now you have array with same roll number and different roll number with assign course.
+-> Find different pairs of roll numbers eg: AB, BC, CD and find common courses among them and if they don't have any common course print empty array.
+
+We write the logic approach step by step
+----------------------------------------
+-> First we get the input as String[][] something like below
+	String[][] input = {
+		{"A", "Math"},
+		{"A", "Java"}
+		{"A", "Sql"}
+		{"B", "Java"}
+		{"B", "Python"}
+		{"C", "Python"}
+		{"C", "AWS"}
+	}
+-> We group them by roll number and course.
+-> get Unique roll numbers
+-> generate unique pairs
+-> intersect their course sets
+-> store pair with common courses.
+
+Analyzing time complexity
+-------------------------
+N - number of input rows
+R - number of unique roll numbers
+C - average number of course per roll
+1. Grouping
+-----------
+-We visit every input row once
+-So, Hashmap lookup and HashSet.add() are average O(1)
+-> Time would be O(n)
+2.Generating unique pairs
+-------------------------
+-> we have outer loop and inner loop
+-> If there are R students then number of unique pairs are
+	-> R * (R-1)/2
+	-> Example with 4 students
+	-> 	a-b,
+		a-c,
+		a-d,
+		b-c,
+		b-d,
+		c-d
+	-> That means 4 * (4-1) /2 - 6
+	-> O(R2)
+3.Intersection
+--------------
+-For each pair we do
+	- If CourseA has C courses
+	- loop through coursesA - O(c)
+	- Hashset.contains() - O(1) average
+	- HashSet.add() - O(1) average
+	- therefore pair costs O(C)
+4.Combining pair generation and intersection
+---------------------------------------------
+-> O(R2) pairs
+-> O(C)
+-> O(R2) * O(C)
+-> O(R2 * C)
+-> So total time complexity would be O(N) + O(R2 * C)
+
+Common Interview follow-ups
+---------------------------
+1. Why did we use set instead of list?
+-> Set automatically removes duplicates and provides faster lookups
+-> Since we only care about unique courses and intersection, set is more suitable data structure.
+2. What if no common courses found
+-> Then the intersection set will be empty and i'll print empty array as required.
+3.Can this solution be extended to all roll combinations instead of adjacent pairs.
+-> Yes, instead of adjacent pairs, i can generate all combinations using nested loops and apply same intersection logic.
